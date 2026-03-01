@@ -89,9 +89,6 @@ RUN --mount=type=cache,target=/data/.npm \
 RUN curl -L https://github.com/azlux/uv/releases/latest/download/uv-linux-x64 -o /usr/local/bin/uv && \
     chmod +x /usr/local/bin/uv
 
-# Claude + Kimi
-RUN curl -L https://code.kimi.com/install.sh | bash && \
-    command -v uv
 
 # Make sure uv and other local bins are available
 ENV PATH="/root/.local/bin:${PATH}"
@@ -103,10 +100,6 @@ FROM dependencies AS final
 
 WORKDIR /app
 COPY . .
-
-# Symlinks
-RUN ln -sf /data/.kimi/bin/kimi /usr/local/bin/kimi || true && \
-    chmod +x /app/scripts/*.sh
 
 ENV PATH="/root/.local/bin:/usr/local/go/bin:/usr/local/bin:/usr/bin:/bin:/data/.bun/bin:/data/.bun/install/global/bin:/data/.claude/bin:/data/.kimi/bin"
 EXPOSE 18789
