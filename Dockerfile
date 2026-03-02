@@ -67,7 +67,10 @@ ARG OPENCLAW_BETA=false
 ENV OPENCLAW_BETA=${OPENCLAW_BETA} \
     OPENCLAW_NO_ONBOARD=1 \
     NPM_CONFIG_UNSAFE_PERM=true
-
+    
+RUN apt-get update && apt-get install -y docker.io && \
+    rm -rf /var/lib/apt/lists/*
+    
 # Bun global installs (with cache)
 RUN --mount=type=cache,target=/data/.bun/install/cache \
     bun install -g vercel @marp-team/marp-cli https://github.com/tobi/qmd && \
